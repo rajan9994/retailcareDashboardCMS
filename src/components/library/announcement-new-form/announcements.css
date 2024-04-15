@@ -1,0 +1,19 @@
+.dx-quill-container {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1;
+    flex-basis: 0%;
+  flex-basis: auto;
+  min-height: 1px;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  /* max-height: 200px; */
+  overflow-y: scroll;
+  border-top: 1px solid #d7d7d7;
+}
+.chkbox{
+  height: 21px;
+  width: 20px;
+  margin-top: 10px;
+}

@@ -1,0 +1,11 @@
+.dx-quill-container {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1;
+    flex-basis: 0%;
+  flex-basis: auto;
+  min-height: 1px;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
