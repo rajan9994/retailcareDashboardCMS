@@ -22,6 +22,7 @@ import DataGrid, {
   Item,
   LoadPanel,
   DataGridTypes,
+  RowDragging,
 } from 'devextreme-react/data-grid';
 import SelectBox from 'devextreme-react/select-box';
 import TextBox from 'devextreme-react/text-box';
@@ -164,6 +165,19 @@ export const news = () => {
     },
     []
   );
+  const processReorder = async(e) => {
+    const newOrderIndex = parseInt(e.toIndex) + 1;
+    const newContactData = {
+      id: e.itemData.id,
+      sortOrder: newOrderIndex,
+      isRowOrder: true,
+    };
+    await saveNews(newContactData);
+    await refresh();
+  };
+  const onReorder = (e) => {
+    e.promise = processReorder(e);
+  };
   const refresh = useCallback(() => {
     gridRef.current?.instance.refresh();
   }, []);
@@ -245,6 +259,11 @@ export const news = () => {
           allowColumnResizing
           columnResizingMode='widget'
         >
+          <RowDragging
+            allowReordering
+            onReorder={onReorder}
+            dropFeedbackMode='push'
+          />
           <LoadPanel showPane={false} />
           <SearchPanel visible placeholder='New Article Search' />
           <ColumnChooser enabled />

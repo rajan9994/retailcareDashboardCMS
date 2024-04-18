@@ -63,7 +63,7 @@ export const savePOS = async(POSData) => {
     formData.append('userID', String(userDetails.userID));
     formData.append('sessionKey', userDetails.sessionKey);
     formData.append('textData', JSON.stringify(POSData));
-    console.log('formData', formData);
+    // console.log('formData', formData);
     return await getfromApi('saveText.php', formData);
   }
   catch (error) {

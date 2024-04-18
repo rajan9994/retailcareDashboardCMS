@@ -4,11 +4,7 @@ import { saveAs } from 'file-saver-es';
 import { Workbook } from 'exceljs';
 import './pos.scss';
 // import { getContacts } from 'dx-template-gallery-data';
-import {
-  getPOS,
-  savePOS,
-  deletePOS,
-} from '../../api/pos';
+import { getPOS, savePOS, deletePOS } from '../../api/pos';
 import DataGrid, {
   Sorting,
   Selection,
@@ -22,6 +18,7 @@ import DataGrid, {
   Item,
   LoadPanel,
   DataGridTypes,
+  RowDragging,
 } from 'devextreme-react/data-grid';
 import SelectBox from 'devextreme-react/select-box';
 import TextBox from 'devextreme-react/text-box';
@@ -42,9 +39,7 @@ import {
 } from '../../shared/constants';
 import DataSource from 'devextreme/data/data_source';
 import notify from 'devextreme/ui/notify';
-import {
-  announcementStatus,
-} from '../../components/utils/contact-status/ContactStatus';
+import { announcementStatus } from '../../components/utils/contact-status/ContactStatus';
 import { Confirm } from '../../components';
 
 type FilterContactStatus = ContactStatusType | 'All';
@@ -109,7 +104,7 @@ export const pos = () => {
     ...newPOS,
   });
   const gridRef = useRef<DataGrid>(null);
-  let newContactData:POS;
+  let newContactData: POS;
   const deleteButtonClickedRef = useRef(false);
   useEffect(() => {
     setGridDataSource(
@@ -138,7 +133,7 @@ export const pos = () => {
           id: parseInt(data.id),
           type: 2,
           notes: data.notes,
-          sortOrder: data.sortOrder
+          sortOrder: data.sortOrder,
         };
         setFormDataDefaults(newData);
         changePopupVisibility(true); // Open the form popup for editing
@@ -147,6 +142,27 @@ export const pos = () => {
     },
     [changePopupVisibility]
   );
+  const processReorder = async(e) => {
+    // const visibleRows = e.component.getVisibleRows();
+    // console.log('reOrder ', e);
+    // const newOrderIndex = visibleRows[e.toIndex].data.sortOrder;
+    // const fromIndex=
+    const newOrderIndex = parseInt(e.toIndex) + 1;
+    const newContactData = {
+      id: e.itemData.id,
+      sortOrder: newOrderIndex,
+      isRowOrder: true,
+      type:2
+    };
+    // console.log('newContactData', newContactData);
+    await savePOS(newContactData);
+    // await tasksStore.update(e.itemData.ID, { OrderIndex: newOrderIndex });
+    // await e.component.refresh();
+    await refresh();
+  };
+  const onReorder = (e) => {
+    e.promise = processReorder(e);
+  };
   const [status, setStatus] = useState(filterStatusList[0]);
   const filterByStatus = useCallback(
     (e: DropDownButtonTypes.SelectionChangedEvent) => {
@@ -189,7 +205,7 @@ export const pos = () => {
           icon='remove'
           stylingMode='outlined'
           onClick={handleButtonClick}
-          style={{ cursor: 'pointer', color: 'red', border:'0px' }}
+          style={{ cursor: 'pointer', color: 'red', border: '0px' }}
         />
         <Confirm
           visible={confirmationVisible}
@@ -245,6 +261,11 @@ export const pos = () => {
           allowColumnResizing
           columnResizingMode='widget'
         >
+          <RowDragging
+            allowReordering
+            onReorder={onReorder}
+            dropFeedbackMode='push'
+          />
           <LoadPanel showPane={false} />
           <SearchPanel visible placeholder='POS Search' />
           <ColumnChooser enabled />
@@ -341,11 +362,7 @@ export const pos = () => {
             dataType='datetime'
             format='yyyy-MM-dd hh:mm:ss a'
           /> */}
-          <Column
-            caption=''
-            width={50}
-            cellRender={deleteButtonCellRender}
-          />
+          <Column caption='' width={50} cellRender={deleteButtonCellRender} />
         </DataGrid>
         <FormPopup
           title='Add/Edit POS Article'

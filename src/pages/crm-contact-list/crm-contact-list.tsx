@@ -22,6 +22,7 @@ import DataGrid, {
   Item,
   LoadPanel,
   DataGridTypes,
+  RowDragging,
 } from 'devextreme-react/data-grid';
 import SelectBox from 'devextreme-react/select-box';
 import TextBox from 'devextreme-react/text-box';
@@ -122,7 +123,7 @@ export const CRMContactList = () => {
   }, []);
 
   const changePopupVisibility = useCallback((isVisble) => {
-    console.log('in change visi');
+    // console.log('in change visi');
     setPopupVisible(isVisble);
   }, []);
   const onAddContactClick = useCallback(() => {
@@ -165,6 +166,20 @@ export const CRMContactList = () => {
     },
     []
   );
+  const processReorder = async(e) => {
+    const newOrderIndex = parseInt(e.toIndex) + 1;
+    const newContactData = {
+      id: e.itemData.id,
+      sortOrder: newOrderIndex,
+      isRowOrder: true,
+      // type:2
+    };
+    await saveAnnouncement(newContactData);
+    await refresh();
+  };
+  const onReorder = (e) => {
+    e.promise = processReorder(e);
+  };
   const refresh = useCallback(() => {
     gridRef.current?.instance.refresh();
   }, []);
@@ -246,6 +261,11 @@ export const CRMContactList = () => {
           allowColumnResizing
           columnResizingMode='widget'
         >
+          <RowDragging
+            allowReordering
+            onReorder={onReorder}
+            dropFeedbackMode='push'
+          />
           <LoadPanel showPane={false} />
           <SearchPanel visible placeholder='Announcements Search' />
           <ColumnChooser enabled />

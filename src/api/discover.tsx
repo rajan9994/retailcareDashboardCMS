@@ -63,7 +63,7 @@ export const saveDiscoverArticle = async(data) => {
     formData.append('userID', String(userDetails.userID));
     formData.append('sessionKey', userDetails.sessionKey);
     formData.append('textData', JSON.stringify(data));
-    console.log('formData', formData);
+    // console.log('formData', formData);
     return await getfromApi('saveText.php', formData);
   }
   catch (error) {

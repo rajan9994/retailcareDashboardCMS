@@ -90,7 +90,7 @@ export const newAnnoucement: Announcements = {
   status: '1',
   type:1,
   notes: '',
-  sortOrder: 0,
+  sortOrder: 1,
 };
 export const newPOS: POS = {
   id: 0,
@@ -99,7 +99,7 @@ export const newPOS: POS = {
   status: '1',
   type:2,
   notes: '',
-  sortOrder: 0,
+  sortOrder: 1,
 };
 export const newDiscover: POS = {
   id: 0,
@@ -108,7 +108,7 @@ export const newDiscover: POS = {
   status: '1',
   type:1,
   notes: '',
-  sortOrder: 0,
+  sortOrder: 1,
 };
 export const newFeatures: POS = {
   id: 0,
@@ -117,7 +117,7 @@ export const newFeatures: POS = {
   status: '1',
   type:3,
   notes: '',
-  sortOrder: 0,
+  sortOrder: 1,
 };
 export const newNews: POS = {
   id: 0,
@@ -126,5 +126,5 @@ export const newNews: POS = {
   status: '1',
   type:1,
   notes: '',
-  sortOrder: 0,
+  sortOrder: 1,
 };

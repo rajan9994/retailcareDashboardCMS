@@ -22,6 +22,7 @@ import DataGrid, {
   Item,
   LoadPanel,
   DataGridTypes,
+  RowDragging,
 } from 'devextreme-react/data-grid';
 import SelectBox from 'devextreme-react/select-box';
 import TextBox from 'devextreme-react/text-box';
@@ -147,6 +148,27 @@ export const features = () => {
     },
     [changePopupVisibility]
   );
+  const processReorder = async(e) => {
+    // const visibleRows = e.component.getVisibleRows();
+    // console.log('reOrder ', e);
+    // const newOrderIndex = visibleRows[e.toIndex].data.sortOrder;
+    // const fromIndex=
+    const newOrderIndex = parseInt(e.toIndex) + 1;
+    const newContactData = {
+      id: e.itemData.id,
+      sortOrder: newOrderIndex,
+      isRowOrder: true,
+      type:3
+    };
+    // console.log('newContactData', newContactData);
+    await saveNewFeatures(newContactData);
+    // await tasksStore.update(e.itemData.ID, { OrderIndex: newOrderIndex });
+    // await e.component.refresh();
+    await refresh();
+  };
+  const onReorder = (e) => {
+    e.promise = processReorder(e);
+  };
   const [status, setStatus] = useState(filterStatusList[0]);
   const filterByStatus = useCallback(
     (e: DropDownButtonTypes.SelectionChangedEvent) => {
@@ -245,6 +267,11 @@ export const features = () => {
           allowColumnResizing
           columnResizingMode='widget'
         >
+          <RowDragging
+            allowReordering
+            onReorder={onReorder}
+            dropFeedbackMode='push'
+          />
           <LoadPanel showPane={false} />
           <SearchPanel visible placeholder='Features Search' />
           <ColumnChooser enabled />

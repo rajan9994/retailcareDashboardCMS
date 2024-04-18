@@ -12,7 +12,7 @@ import {
 import { Htmleditor } from '../..';
 import { getSizeQualifier } from '../../../utils/media-query';
 import './announcements.css';
-import { NumberBox } from 'devextreme-react';
+// import { NumberBox } from 'devextreme-react';
 // import { HtmlEditor } from '../../utils/html-editor/tinyHtmlEditor';
 
 export const POSNewForm = ({
@@ -63,7 +63,7 @@ export const POSNewForm = ({
             required={false}
           />
         </FormItem>
-        <FormItem>
+        {/* <FormItem>
           <NumberBox
             label='Order'
             width='100%'
@@ -72,8 +72,8 @@ export const POSNewForm = ({
             inputAttr={{ class: 'form-editor-input' }}
             stylingMode='filled'
             onValueChange={updateField('sortOrder')}
-          />
-        </FormItem>
+          /> */}
+        {/* </FormItem> */}
         <FormItem>
           <label>
             Status:

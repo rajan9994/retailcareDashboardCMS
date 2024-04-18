@@ -9,7 +9,7 @@ import { FormTextbox, FormTextboxR } from '../..';
 import { Htmleditor } from '../..';
 import { getSizeQualifier } from '../../../utils/media-query';
 import './announcements.css';
-import { NumberBox } from 'devextreme-react';
+// import { NumberBox } from 'devextreme-react';
 
 export const AnnouncementsNewForm = ({
   initData,
@@ -67,7 +67,7 @@ export const AnnouncementsNewForm = ({
         </FormItem>
         {/* </GroupItem>
       <GroupItem> */}
-        <FormItem>
+        {/* <FormItem>
           <NumberBox
             label='Order'
             value={newAnnouncementsData.sortOrder}
@@ -76,7 +76,7 @@ export const AnnouncementsNewForm = ({
             stylingMode='filled'
             onValueChange={updateField('sortOrder')}
           />
-        </FormItem>
+        </FormItem> */}
         <FormItem>
           <label>
             Status:
@@ -101,8 +101,6 @@ export const AnnouncementsNewForm = ({
           />
           <label>Inactive</label>
         </FormItem>
-      </GroupItem>
-      <GroupItem>
         <FormItem>
           <label>
             Type:
@@ -128,6 +126,8 @@ export const AnnouncementsNewForm = ({
           <label>Urgent</label>
         </FormItem>
       </GroupItem>
+      {/* <GroupItem>
+      </GroupItem> */}
       <GroupItem>
         <FormItem>
           <FormTextboxR
