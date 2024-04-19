@@ -14,6 +14,7 @@ import {
   pos,
   discover,
   features,
+  consultations,
   news,
 } from './pages';
 import { withNavigationWatcher } from './contexts/navigation';
@@ -82,6 +83,10 @@ const routes = [
   {
     path: '/feature',
     element: features,
+  },
+  {
+    path: '/consultations',
+    element: consultations,
   },
 ];
 

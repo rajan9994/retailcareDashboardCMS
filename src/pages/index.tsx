@@ -14,3 +14,4 @@ export { pos } from './POS/pos';
 export { discover } from './discover-our-solution/discover';
 export { features } from './features/features';
 export { news } from './news/news';
+export { consultations } from './consultations/consultations';

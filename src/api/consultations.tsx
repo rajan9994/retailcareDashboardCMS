@@ -19,17 +19,17 @@ export const getfromApi = async(endpoint, params) => {
   }
 };
 
-export const getNews = async() => {
+export const getConsultations = async() => {
   try {
     const userDetails = getUserDetails();
     const formData = new FormData();
     formData.append('userID', String(userDetails.userID));
     formData.append('sessionKey', userDetails.sessionKey);
     // formData.append('typeID', '3');
-    const POS = await getfromApi('getNews.php?all=1', formData);
+    const POS = await getfromApi('getConsultations.php?all=1', formData);
     if(POS.status == 'success')
     {
-      return POS.newsData;
+      return POS.consultationData;
     }
     else
     {
@@ -56,15 +56,15 @@ export const getPOSSpecific = async(id) => {
   }
 };
 
-export const saveNews = async(POSData) => {
+export const saveConsultations = async(POSData) => {
   try{
     const userDetails = getUserDetails();
     const formData = new FormData();
     formData.append('userID', String(userDetails.userID));
     formData.append('sessionKey', userDetails.sessionKey);
-    formData.append('newsData', JSON.stringify(POSData));
+    formData.append('consultationData', JSON.stringify(POSData));
     // console.log('formData', formData);
-    return await getfromApi('saveNews.php', formData);
+    return await getfromApi('saveConsultationsAdmin.php', formData);
   }
   catch (error) {
     console.error('Error fetching announcement:', error);
@@ -72,14 +72,14 @@ export const saveNews = async(POSData) => {
   }
 };
 
-export const deleteNews = async(id) => {
+export const deleteConsultations = async(id) => {
   try {
     const userDetails = getUserDetails();
     const formData = new FormData();
     formData.append('userID', String(userDetails.userID));
     formData.append('sessionKey', userDetails.sessionKey);
     formData.append('id', id);
-    return await getfromApi('deleteNews.php', formData);
+    return await getfromApi('deleteConsultations.php', formData);
   }
   catch (error) {
     console.error('Error fetching announcement:', error);

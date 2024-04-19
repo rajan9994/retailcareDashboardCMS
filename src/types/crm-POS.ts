@@ -10,3 +10,14 @@ export interface POS {
     sortOrder: number,
     notes: string,
 }
+export interface consultations{
+    id: number,
+    name: string,
+    description: string,
+    email: string,
+    phoneNumber: string,
+    company: string,
+    status: string,
+    sortOrder: number,
+    notes: string,
+}

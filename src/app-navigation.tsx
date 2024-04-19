@@ -83,6 +83,17 @@ export const navigation = [
     ]
   },
   {
+    text: 'Consultations',
+    icon: 'email',
+    path: '',
+    items: [
+      {
+        text: 'Consultations List',
+        path: '/consultations',
+      }
+    ]
+  },
+  {
     text: 'Profile',
     icon: 'box',
     path: '',

@@ -1,7 +1,7 @@
 import { Task } from '../types/task';
 import { Contact } from '../types/crm-contact';
 import { Announcements } from '../types/crm-Announcements';
-import { POS } from '../types/crm-POS';
+import { POS, consultations } from '../types/crm-POS';
 
 export const PRIORITY_ITEMS = ['Low', 'Normal', 'High'];
 export const STATUS_ITEMS = ['Open', 'In Progress', 'Deferred', 'Completed'];
@@ -42,6 +42,16 @@ export const statusMapping = {
 };
 export const STATUS_LIST = [
   'Active',
+  'Archived'
+];
+export const consultationStatusMapping = {
+  'Not Read': '1',
+  'Read': '2',
+  'Archived': '3'
+};
+export const consultationSTATUS_LIST = [
+  'Not Read',
+  'Read',
   'Archived'
 ];
 export const newTask: Task = {
@@ -127,4 +137,15 @@ export const newNews: POS = {
   type:1,
   notes: '',
   sortOrder: 1,
+};
+export const newConsultations: consultations = {
+  id: 0,
+  name: 'John',
+  description: '',
+  email: '',
+  phoneNumber: '',
+  company: '',
+  status: '2',
+  sortOrder: 1,
+  notes: '',
 };
