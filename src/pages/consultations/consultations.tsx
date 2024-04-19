@@ -38,9 +38,10 @@ import {
   consultationStatusMapping,
 } from '../../shared/constants';
 import DataSource from 'devextreme/data/data_source';
-import notify from 'devextreme/ui/notify';
+// import notify from 'devextreme/ui/notify';
 import { consultationStatus } from '../../components/utils/contact-status/ContactStatus';
 import { Confirm } from '../../components';
+import notify from 'devextreme/ui/notify';
 
 type FilterContactStatus = ContactStatusType | 'All';
 const STATUS_LIST = Object.keys(consultationStatusMapping);
@@ -106,6 +107,7 @@ export const consultations = () => {
   const gridRef = useRef<DataGrid>(null);
   let newContactData: POS;
   const deleteButtonClickedRef = useRef(false);
+  const saveButtonClickedRef = useRef(false);
   useEffect(() => {
     setGridDataSource(
       new DataSource({
@@ -129,7 +131,7 @@ export const consultations = () => {
         const newData = {
           name: data.name,
           description: data.description,
-          status: data.status,
+          status: '2',
           id: parseInt(data.id),
           type: parseInt(data.type),
           notes: data.notes,
@@ -140,6 +142,12 @@ export const consultations = () => {
         };
         setFormDataDefaults(newData);
         changePopupVisibility(true); // Open the form popup for editing
+        if(data.status == 1)
+        {
+          saveButtonClickedRef.current = false;
+          onDataChanged(newData);
+          onSaveClick();
+        }
       }
       deleteButtonClickedRef.current = false; // Reset the flag
     },
@@ -217,25 +225,29 @@ export const consultations = () => {
   const onSaveClick = useCallback(async() => {
     try {
       await saveConsultations(newContactData);
-      notify(
-        {
-          message: `"${newContactData.name}" saved successfully`,
-          position: { at: 'bottom center', my: 'bottom center' },
-        },
-        'success'
-      );
-      setFormDataDefaults({ ...newConsultations });
-      setPopupVisible(false);
+      if(saveButtonClickedRef.current)
+      {
+        notify(
+          {
+            message: `"${newContactData.name}" saved successfully`,
+            position: { at: 'bottom center', my: 'bottom center' },
+          },
+          'success'
+        );
+        setFormDataDefaults({ ...newConsultations });
+        setPopupVisible(false);
+      }
+      saveButtonClickedRef.current = true;
     } catch (error) {
       console.error('Error saving Consultations:', error);
-      notify(
-        {
-          message: 'Failed to save Consultations. Please try again later.',
-          position: { at: 'bottom center', my: 'bottom center' },
-        },
-        'error'
-      );
-      setFormDataDefaults({ ...newConsultations });
+      // notify(
+      //   {
+      //     // message: 'Failed to save Consultations. Please try again later.',
+      //     // position: { at: 'bottom center', my: 'bottom center' },
+      //   },
+      //   'error'
+      // );
+      // setFormDataDefaults({ ...newConsultations });
     }
     refresh();
   }, []);
